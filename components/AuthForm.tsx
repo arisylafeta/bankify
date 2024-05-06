@@ -11,7 +11,7 @@ import CustomInput from './CustomInput';
 import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { signIn, signUp } from '@/lib/actions/user.actions';
+import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.actions';
 
 //import PlaidLink from './PlaidLink';
 export const AuthForm = ({ type }: { type: string; }) => {
@@ -56,8 +56,10 @@ export const AuthForm = ({ type }: { type: string; }) => {
       }
 
       if (type === 'sign-in') {
-        const response = await signIn(data.email, data.password);
-
+        const response = await signIn({
+          email: data.email,
+          password: data.password
+      })
         if (response !== undefined) router.push('/');
       }
     } catch (error) {
